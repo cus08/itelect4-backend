@@ -43,3 +43,38 @@ export type BookingDoc = Omit<Booking, "id" | "tuteeId"> & {
 };
 
 export type NewBookingBody = Pick<Booking, "sessionId" | "tutorId" | "notes">;
+
+export interface Course {
+  code: string;
+  title: string;
+  units: number;
+  semester: string;
+}
+
+// Course is the one Session 1 interface with no id field of its own --
+// the code is its identity -- so unlike the two types above there is
+// nothing here to rename and nothing to leave out. Naming all four
+// fields looks like saying nothing, and it is doing one real job:
+// Omit and Pick both produce a MAPPED type, and an interface is not
+// one. The toJSON transform in Course.ts takes Record<string, unknown>;
+// TypeScript hands it a mapped type happily and refuses an interface.
+export type CourseDoc = Pick<
+  Course,
+  "code" | "title" | "units" | "semester"
+>;
+
+export interface Submission {
+  id: string;
+  studentId: string;
+  courseCode: string;
+  repoUrl: string;
+  submittedAt: string;
+  grade?: number;
+}
+
+export type SubmissionDoc = Omit<Submission, "id" | "studentId"> & {
+  studentId: Types.ObjectId;
+};
+
+export type NewSubmissionBody = Pick<Submission, "courseCode" | "repoUrl">;
+
