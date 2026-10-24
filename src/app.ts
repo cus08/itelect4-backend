@@ -46,8 +46,12 @@ app.use(express.json());
 // a request is the first thing that happens. So the waiting moves
 // here, in front of every route.
 app.use(async (_req: Request, _res: Response, next: NextFunction) => {
-  await connectDB();
-  next();
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    next(err);
+  }
 });
 
 app.get("/api/health", (_req: Request, res: Response) => {
@@ -99,3 +103,6 @@ app.use(
 // whole of the deployment configuration for this project, and it is
 // why there is no vercel.json in this repo.
 export default app;
+module.exports = app;
+module.exports.default = app;
+module.exports.app = app;
