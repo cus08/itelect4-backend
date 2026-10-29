@@ -11,6 +11,7 @@ import { authRouter } from "./routes/auth";
 import { courseRouter } from "./routes/courses";
 import { submissionRouter } from "./routes/submissions";
 import { bookingRouter } from "./routes/bookings";
+import { aiRouter } from "./routes/ai";
 
 // This file builds the app and stops. It never opens a port and never
 // touches the database, so anything that wants an app -- server.ts, or
@@ -62,6 +63,10 @@ app.use("/api/auth", authRouter);
 app.use("/api/courses", courseRouter);
 app.use("/api/submissions", submissionRouter);
 app.use("/api/bookings", bookingRouter);
+
+// ===== SESSION 11: one more router, mounted like the other three ====
+// Private, rate limited, and the only route that talks to Gemini.
+app.use("/api/ai", aiRouter);
 
 // Nothing above matched, so the URL does not exist. Without this, an
 // unknown path returns Express's own HTML error page, which is a
