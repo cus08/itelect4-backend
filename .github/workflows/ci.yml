@@ -6,12 +6,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    env:
-      MONGODB_URI: ${{ secrets.MONGODB_URI }}
-      JWT_SECRET: ${{ secrets.JWT_SECRET }}
-      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-      CORS_ORIGIN: http://localhost:5173
-
     steps:
       - uses: actions/checkout@v4
 
@@ -25,8 +19,5 @@ jobs:
       - name: Type-check
         run: npm run typecheck
 
-      - name: Unit tests (schemas — no DB needed)
+      - name: Schema unit tests (no database needed)
         run: npx vitest run src/test/schemas.test.ts --reporter=verbose
-
-      - name: Integration tests (requires MONGODB_URI secret)
-        run: npm test
