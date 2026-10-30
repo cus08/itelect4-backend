@@ -2,11 +2,10 @@ import "dotenv/config";
 import mongoose from "mongoose";
 import { connectDB } from "./config/db";
 import { Course } from "./models/Course";
+import { Session } from "./models/Session";
 import { COURSES } from "./data/courses";
+import { SESSIONS } from "./data/sessions";
 
-// npm run seed. Run it once after the database is created, and again
-// after anything that empties it. Nothing else in the project writes
-// a course.
 async function seed() {
   await connectDB();
 
@@ -15,8 +14,13 @@ async function seed() {
     // none. Running this a second time leaves three courses, not six.
     await Course.updateOne({ code: course.code }, course, { upsert: true });
   }
-
   console.log(`${COURSES.length} courses in ${mongoose.connection.name}`);
+
+  // Clear existing sessions and re-insert so the list stays in sync
+  // with the seed file every time you run npm run seed.
+  await Session.deleteMany({});
+  await Session.insertMany(SESSIONS);
+  console.log(`${SESSIONS.length} sessions in ${mongoose.connection.name}`);
 
   // Without this the script never ends: the connection is an open
   // socket, and Node keeps running while one is still open.

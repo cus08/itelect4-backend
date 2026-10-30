@@ -63,6 +63,18 @@ export type CourseDoc = Pick<
   "code" | "title" | "units" | "semester"
 >;
 
+export interface TutoringSession {
+  id: string;
+  tutorId: number;
+  courseCode: string;
+  topic: string;
+  description: string;
+  schedule: string;
+  maxTutees: number;
+}
+
+export type SessionDoc = Omit<TutoringSession, "id">;
+
 export interface Submission {
   id: string;
   studentId: string;

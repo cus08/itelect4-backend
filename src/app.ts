@@ -9,6 +9,7 @@ import mongoose from "mongoose";
 import { connectDB } from "./config/db";
 import { authRouter } from "./routes/auth";
 import { courseRouter } from "./routes/courses";
+import { sessionRouter } from "./routes/sessions";
 import { submissionRouter } from "./routes/submissions";
 import { bookingRouter } from "./routes/bookings";
 import { aiRouter } from "./routes/ai";
@@ -61,6 +62,7 @@ app.get("/api/health", (_req: Request, res: Response) => {
 
 app.use("/api/auth", authRouter);
 app.use("/api/courses", courseRouter);
+app.use("/api/sessions", sessionRouter);
 app.use("/api/submissions", submissionRouter);
 app.use("/api/bookings", bookingRouter);
 
@@ -108,6 +110,3 @@ app.use(
 // whole of the deployment configuration for this project, and it is
 // why there is no vercel.json in this repo.
 export default app;
-module.exports = app;
-module.exports.default = app;
-module.exports.app = app;
