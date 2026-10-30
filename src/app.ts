@@ -110,6 +110,3 @@ app.use(
 // whole of the deployment configuration for this project, and it is
 // why there is no vercel.json in this repo.
 export default app;
-module.exports = app;
-module.exports.default = app;
-module.exports.app = app;
